@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('pegawai_id')->constrained('pegawai')->onDelete('cascade');
             $table->foreignId('jabatan_id')->constrained('jabatan')->onDelete('cascade');
             $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_berakhir')->nullable();
             $table->boolean('is_aktif')->default(true);
             $table->timestamps();
         });

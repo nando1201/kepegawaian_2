@@ -12,14 +12,16 @@ class JabatanPegawai extends Model
         'pegawai_id',
         'jabatan_id',
         'tanggal_mulai',
+        'tanggal_berakhir',
         'is_aktif',
     ];
 
     protected function casts(): array
     {
         return [
-            'tanggal_mulai' => 'date',
-            'is_aktif'      => 'boolean',
+            'tanggal_mulai'    => 'date',
+            'tanggal_berakhir' => 'date',
+            'is_aktif'         => 'boolean',
         ];
     }
 

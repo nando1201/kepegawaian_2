@@ -7,7 +7,7 @@ import Pagination from '../components/Pagination'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
 
-const initialForm = { pegawai_id: '', jabatan_id: '', tanggal_mulai: '' }
+const initialForm = { pegawai_id: '', jabatan_id: '', tanggal_mulai: '', tanggal_berakhir: '' }
 
 function formatRupiah(val) {
   if (!val && val !== 0) return '-'
@@ -64,6 +64,7 @@ export default function JabatanPegawai() {
       pegawai_id: item.pegawai_id,
       jabatan_id: item.jabatan_id,
       tanggal_mulai: item.tanggal_mulai ? item.tanggal_mulai.split('T')[0] : '',
+      tanggal_berakhir: item.tanggal_berakhir ? item.tanggal_berakhir.split('T')[0] : '',
     })
     setErrors({})
     setModal({ open: true, type: 'edit', item })
@@ -135,7 +136,7 @@ export default function JabatanPegawai() {
               <thead>
                 <tr>
                   <th>#</th><th>NIP</th><th>Nama Pegawai</th>
-                  <th>Jabatan</th><th>Gaji</th><th>Tanggal Mulai</th><th>Status</th>
+                  <th>Jabatan</th><th>Gaji</th><th>Tanggal Mulai</th><th>Tanggal Berakhir</th><th>Status</th>
                   {isAdmin() && <th>Aksi</th>}
                 </tr>
               </thead>
@@ -154,6 +155,11 @@ export default function JabatanPegawai() {
                     <td className="text-xs text-muted">
                       {item.tanggal_mulai
                         ? new Date(item.tanggal_mulai).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' })
+                        : '-'}
+                    </td>
+                    <td className="text-xs text-muted">
+                      {item.tanggal_selesai || item.tanggal_berakhir
+                        ? new Date(item.tanggal_selesai || item.tanggal_berakhir).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' })
                         : '-'}
                     </td>
                     <td>
@@ -212,10 +218,19 @@ export default function JabatanPegawai() {
               </select>
               {errors.jabatan_id && <p className="form-error">{errors.jabatan_id[0]}</p>}
             </div>
-            <div>
-              <label className="form-label">Tanggal Mulai</label>
-              <input type="date" className="form-input" value={form.tanggal_mulai}
-                onChange={(e) => f('tanggal_mulai', e.target.value)} />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="form-label">Tanggal Mulai</label>
+                <input type="date" className="form-input" value={form.tanggal_mulai}
+                  onChange={(e) => f('tanggal_mulai', e.target.value)} />
+                {errors.tanggal_mulai && <p className="form-error">{errors.tanggal_mulai[0]}</p>}
+              </div>
+              <div>
+                <label className="form-label">Tanggal Berakhir</label>
+                <input type="date" className="form-input" value={form.tanggal_berakhir}
+                  onChange={(e) => f('tanggal_berakhir', e.target.value)} />
+                {errors.tanggal_berakhir && <p className="form-error">{errors.tanggal_berakhir[0]}</p>}
+              </div>
             </div>
           </div>
           <div className="modal-footer">

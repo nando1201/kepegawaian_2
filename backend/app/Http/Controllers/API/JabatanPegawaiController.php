@@ -35,9 +35,10 @@ class JabatanPegawaiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'pegawai_id'    => 'required|exists:pegawai,id',
-            'jabatan_id'    => 'required|exists:jabatan,id',
-            'tanggal_mulai' => 'nullable|date',
+            'pegawai_id'       => 'required|exists:pegawai,id',
+            'jabatan_id'       => 'required|exists:jabatan,id',
+            'tanggal_mulai'    => 'nullable|date',
+            'tanggal_berakhir' => 'nullable|date|after_or_equal:tanggal_mulai',
         ]);
 
         // Nonaktifkan jabatan lama pegawai (jika ada)
@@ -68,9 +69,10 @@ class JabatanPegawaiController extends Controller
     public function update(Request $request, JabatanPegawai $jabatanPegawai)
     {
         $validated = $request->validate([
-            'pegawai_id'    => 'required|exists:pegawai,id',
-            'jabatan_id'    => 'required|exists:jabatan,id',
-            'tanggal_mulai' => 'nullable|date',
+            'pegawai_id'       => 'required|exists:pegawai,id',
+            'jabatan_id'       => 'required|exists:jabatan,id',
+            'tanggal_mulai'    => 'nullable|date',
+            'tanggal_berakhir' => 'nullable|date|after_or_equal:tanggal_mulai',
         ]);
 
         // Jika pegawai berubah, nonaktifkan jabatan lama pegawai baru
